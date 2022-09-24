@@ -2,13 +2,21 @@
 const input = require('sync-input');
 
 function main() {
-    console.log("Starting to make a coffee\n" +
-        "Grinding coffee beans\n" +
-        "Boiling water\n" +
-        "Mixing boiled water with crushed coffee beans\n" +
-        "Pouring coffee into the cup\n" +
-        "Pouring some milk into the cup\n" +
-        "Coffee is ready!");
+    console.log("Write how many cups of coffee you will need:");
+
+    let amount = new Number();
+
+    while(true) {
+        amount = Number(input());
+        if (isNaN(amount) || amount < 0)
+            console.log("Enter a positive number!");
+        else
+            break;
+    }
+
+    console.log(`For ${amount} cups of coffee you will need:`)
+    console.log(`${amount * 200} ml of water\n${amount * 50} ml of milk\n${amount * 15} g of coffee beans`)
+
 }
 
 main();

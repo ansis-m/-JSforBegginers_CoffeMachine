@@ -18,16 +18,38 @@ function printStatus(){
 
 
 function buy() {
-    console.log("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:");
+    console.log("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:");
     let coffe = input();
     switch (coffe){
         case("1"):
+            if (!(water >= 250 && beans >= 16 && cups > 0)){
+                if(water < 250)
+                    console.log("Sorry, not enough water!");
+                else if(beans < 16)
+                    console.log("Sorry, not enough beans!");
+                else if(cups < 1)
+                    console.log("Sorry, not enough cups!");
+                return;
+            }
+            console.log("I have enough resources, making you a coffee!");
             water -= 250;
             beans -= 16;
             money += 4;
             cups -= 1;
             break;
         case("2"):
+            if (!(water >= 350 && milk >= 75 && beans >= 20 && cups > 0)){
+                if(water < 350)
+                    console.log("Sorry, not enough water!");
+                else if(milk < 75)
+                    console.log("Sorry, not enough milk!");
+                else if(beans < 20)
+                    console.log("Sorry, not enough beans!");
+                else if(cups < 1)
+                    console.log("Sorry, not enough cups!");
+                return;
+            }
+            console.log("I have enough resources, making you a coffee!");
             water -= 350;
             milk -= 75;
             beans -= 20;
@@ -35,12 +57,26 @@ function buy() {
             cups -= 1;
             break;
         case("3"):
+            if (!(water >= 200 && milk >= 100 && beans >= 12 && cups > 0)){
+                if(water < 200)
+                    console.log("Sorry, not enough water!");
+                else if(milk < 100)
+                    console.log("Sorry, not enough milk!");
+                else if(beans < 12)
+                    console.log("Sorry, not enough beans!");
+                else if(cups < 1)
+                    console.log("Sorry, not enough cups!");
+                return;
+            }
+            console.log("I have enough resources, making you a coffee!");
             water -= 200;
             milk -= 100;
             beans -= 12;
             money += 6;
             cups -= 1;
             break;
+        case("back"):
+            return;
     }
 }
 
@@ -62,28 +98,29 @@ function take() {
 
 function main() {
 
-    printStatus();
    let choice = new String();
    while (true) {
-       console.log("\nWrite action (buy, fill, take):");
+       console.log("Write action (buy, fill, take, remaining, exit):");
        choice = input();
-       if (["buy", "fill", "take"].includes(choice))
+       if (choice == "exit")
            break;
+       else if (["buy", "fill", "take", "remaining"].includes(choice))
+           switch (choice) {
+               case ("buy"):
+                   buy();
+                   break;
+               case("fill"):
+                   fill();
+                   break;
+               case("take"):
+                   take();
+                   break;
+               case("remaining"):
+                   printStatus();
+                   break;
+           }
    }
 
-   switch (choice) {
-       case ("buy"):
-           buy();
-           break;
-       case("fill"):
-           fill();
-           break;
-       case("take"):
-           take();
-           break;
-   }
-
-   printStatus();
 }
 
 main();

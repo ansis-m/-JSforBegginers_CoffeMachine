@@ -1,40 +1,89 @@
 
 const input = require('sync-input');
 
-function main() {
+let water = 400;
+let milk = 540;
+let beans = 120;
+let cups = 9;
+let money = 550;
 
-    console.log("Write how many ml of water the coffee machine has:");
-    let water = Number(input());
+function printStatus(){
+    console.log("The coffee machine has:\n" +
+        `${water} ml of water\n` +
+        `${milk} ml of milk\n` +
+        `${beans} g of coffee beans\n` +
+        `${cups} disposable cups\n` +
+        `$${money} of money`);
+}
 
-    console.log("Write how many ml of milk the coffee machine has:");
-    let milk = Number(input());
 
-    console.log("Write how many grams of coffee beans the coffee machine has:");
-    let beans = Number(input());
-
-
-    console.log("Write how many cups of coffee you will need:");
-
-    let amount = new Number();
-
-    while(true) {
-        amount = Number(input());
-        if (isNaN(amount) || amount < 0)
-            console.log("Enter a positive number!");
-        else
+function buy() {
+    console.log("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:");
+    let coffe = input();
+    switch (coffe){
+        case("1"):
+            water -= 250;
+            beans -= 16;
+            money += 4;
+            cups -= 1;
+            break;
+        case("2"):
+            water -= 350;
+            milk -= 75;
+            beans -= 20;
+            money += 7;
+            cups -= 1;
+            break;
+        case("3"):
+            water -= 200;
+            milk -= 100;
+            beans -= 12;
+            money += 6;
+            cups -= 1;
             break;
     }
+}
 
+function fill() {
+    console.log("Write how many ml of water you want to add:");
+    water += Number(input());
+    console.log("Write how many ml of milk you want to add:");
+    milk += Number(input());
+    console.log("Write how many grams of coffee beans you want to add:");
+    beans += Number(input());
+    console.log("Write how many disposable cups you want to add:");
+    cups += Number(input());
+}
 
-    let possibleCups = Math.min(~~(water/200), ~~(milk/50), ~~(beans/15));
+function take() {
+    console.log(`I gave you $${money}\n`);
+    money = 0;
+}
 
-    if (amount > possibleCups)
-        console.log(`No, I can make only ${possibleCups} cups of coffee`);
-    else if (amount == possibleCups)
-        console.log(`Yes, I can make that amount of coffee`);
-    else if (amount < possibleCups)
-        console.log(`Yes, I can make that amount of coffee (and even ${possibleCups - amount} more than that)`);
+function main() {
 
+    printStatus();
+   let choice = new String();
+   while (true) {
+       console.log("\nWrite action (buy, fill, take):");
+       choice = input();
+       if (["buy", "fill", "take"].includes(choice))
+           break;
+   }
+
+   switch (choice) {
+       case ("buy"):
+           buy();
+           break;
+       case("fill"):
+           fill();
+           break;
+       case("take"):
+           take();
+           break;
+   }
+
+   printStatus();
 }
 
 main();
